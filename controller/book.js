@@ -1,11 +1,14 @@
+const fs = require('fs')
+
 function getBooks(req, res) {
-    try {
-        res.send('Olá mundo!')
-    } catch (error) {
-        res.status(500).send(error.message)
-    }
+  try {
+    const books = JSON.parse(fs.readFileSync('books.json'))
+    res.send(books)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
 }
 
 module.exports = {
-    getBooks
+  getBooks
 }
