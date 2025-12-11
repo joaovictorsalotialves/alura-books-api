@@ -18,7 +18,7 @@ function getBook(req, res) {
       return res.status(200).send(book)
     }
 
-    res.status(422).send('ID Inválido!')
+    res.status(404).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -28,8 +28,12 @@ function registerBook(req, res) {
   try {
     const newBook = req.body
 
-    createBook(newBook)
-    res.status(201).send('Livro inserido com sucesso!')
+    if(newBook.title) {
+      createBook(newBook)
+      return res.status(201).send('Livro inserido com sucesso!')
+    }
+
+    res.status(400).send('O campo title é obrigatorio')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -45,7 +49,7 @@ function editBook(req, res) {
       return res.status(200).send('Livro atualizado com sucesso!')
     }
 
-    res.status(422).send('ID Inválido!')
+    res.status(404).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -60,7 +64,7 @@ function removeBook(req, res) {
       return res.status(200).send('Livro excluido com sucesso!')
     }
 
-    res.status(422).send('ID Inválido!')
+    res.status(404).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
