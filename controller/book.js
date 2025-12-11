@@ -13,8 +13,12 @@ function getBook(req, res) {
   try {
     const id = req.params.id
 
-    const book = getBookById(id)
-    res.status(200).send(book)
+    if (id && Number(id)) {
+      const book = getBookById(id)
+      return res.status(200).send(book)
+    }
+
+    res.status(422).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -36,8 +40,12 @@ function editBook(req, res) {
     const id = req.params.id
     const changes = req.body
 
-    updateBook(changes, id)
-    res.status(200).send('Livro atualizado com sucesso!')
+    if (id && Number(id)) {
+      updateBook(changes, id)
+      return res.status(200).send('Livro atualizado com sucesso!')
+    }
+
+    res.status(422).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -47,8 +55,12 @@ function removeBook(req, res) {
   try {
     const id = req.params.id
 
-    deleteBook(id)
-    res.status(200).send('Livro excluido com sucesso!')
+    if (id && Number(id)) {
+      deleteBook(id)
+      return res.status(200).send('Livro excluido com sucesso!')
+    }
+
+    res.status(422).send('ID Inválido!')
   } catch (error) {
     res.status(500).send(error.message)
   }
