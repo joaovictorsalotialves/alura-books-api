@@ -1,4 +1,5 @@
 const { getAllBooks } = require('../services/book')
+const { getBookById } = require('../services/book')
 
 function getBooks(req, res) {
   try {
@@ -9,6 +10,17 @@ function getBooks(req, res) {
   }
 }
 
+function getBook(req, res) {
+  try {
+    const id = req.params.id
+    const book = getBookById(id)
+    res.send(book)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
 module.exports = {
-  getBooks
+  getBooks,
+  getBook
 }
