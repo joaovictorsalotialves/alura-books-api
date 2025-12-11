@@ -12,7 +12,16 @@ function getBookById(id) {
   return result
 }
 
+function createBook(newBook) {
+  const books = getAllBooks()
+
+  const newListBooks = [...books, newBook]
+
+  fs.writeFileSync('books.json', JSON.stringify(newListBooks))
+}
+
 module.exports = {
   getAllBooks,
-  getBookById
+  getBookById,
+  createBook
 }
