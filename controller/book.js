@@ -1,4 +1,4 @@
-const { getAllBooks, getBookById, createBook } = require('../services/book')
+const { getAllBooks, getBookById, createBook, updateBook } = require('../services/book')
 
 function getBooks(req, res) {
   try {
@@ -12,6 +12,7 @@ function getBooks(req, res) {
 function getBook(req, res) {
   try {
     const id = req.params.id
+    
     const book = getBookById(id)
     res.send(book)
   } catch (error) {
@@ -22,8 +23,21 @@ function getBook(req, res) {
 function registerBook(req, res) {
   try {
     const newBook = req.body
+
     createBook(newBook)
     res.status(201).send('Livro inserido com sucesso!')
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
+function editBook(req, res) {
+  try {
+    const id = req.params.id
+    const changes = req.body
+
+    updateBook(changes, id)
+    res.status(200).send('Livro atualizado com sucesso!')
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -32,5 +46,6 @@ function registerBook(req, res) {
 module.exports = {
   getBooks,
   getBook,
-  registerBook
+  registerBook,
+  editBook
 }
